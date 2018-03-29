@@ -7,8 +7,10 @@ import org.scalatest.time.{Seconds, Span}
 import org.scalatest.time.SpanSugar._
 
 class AsyncWithScalaFuturesTest extends FunSuite with Matchers with ScalaFutures {
-
+  // TODO you can also configure how many retries
   override implicit val patienceConfig: PatienceConfig = PatienceConfig(timeout = Span(2, Seconds))
+
+  // TODO mention timeout env specific config might be helpful like akka. dilated
 
   test("should call async func and wait for it to finish, time out") {
     val result: String =
