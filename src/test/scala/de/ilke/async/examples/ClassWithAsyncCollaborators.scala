@@ -1,5 +1,6 @@
 package de.ilke.async.examples
 import cats.{Id, Monad}
+import cats.syntax.all._
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import scala.language.higherKinds
@@ -40,7 +41,7 @@ class ClassWithAsyncCollaborators extends FunSuite {
 
   // Consider this generic alternative
 
-  /* trait FooRepository2[F[_]] {
+  trait FooRepository2[F[_]] {
     def getFoo: F[Foo]
   }
 
@@ -74,5 +75,5 @@ class ClassWithAsyncCollaborators extends FunSuite {
   test("service should work") {
     val blahService = new BlahService2Impl[Id](new MockFooRepository, new MockBarRepository)
     blahService.getBlah shouldBe Blah(Foo(), Bar())
-  }*/
+  }
 }
