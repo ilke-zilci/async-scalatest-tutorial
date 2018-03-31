@@ -3,14 +3,21 @@ package de.ilke.async.examples
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.{FunSuite, Matchers}
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.time.{Seconds, Span}
+import org.scalatest.time.{Millis, Seconds, Span}
 import org.scalatest.time.SpanSugar._
 
-class AsyncWithScalaFuturesTest extends FunSuite with Matchers with ScalaFutures {
-  // TODO you can also configure how many retries
-  override implicit val patienceConfig: PatienceConfig = PatienceConfig(timeout = Span(2, Seconds))
+object AppConfiguration {
+  val TEST_TIME_FACTOR_ON_CI    = 3
+  val TEST_TIME_FACTOR_ON_LOCAL = 1
+}
 
-  // TODO mention timeout env specific config might be helpful like akka. dilated
+class AsyncWithScalaFuturesTest extends FunSuite with Matchers with ScalaFutures {
+  // timeout : the maximum amount of time to allow unsuccessful queries before giving up and throwing TestFailedException
+  // interval: the amount of time to sleep between each query
+  import AppConfiguration._
+
+  override implicit val patienceConfig: PatienceConfig =
+    PatienceConfig(timeout = Span(2 * TEST_TIME_FACTOR_ON_LOCAL, Seconds), interval = Span(500, Millis))
 
   test("should call async func and wait for it to finish, time out") {
     val result: String =
