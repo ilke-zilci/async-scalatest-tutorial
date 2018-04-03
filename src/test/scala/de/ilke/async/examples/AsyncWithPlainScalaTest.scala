@@ -5,6 +5,7 @@ import org.scalatest.FunSuite
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration
 import org.scalatest.Matchers._
+import scala.concurrent.duration._
 
 class AsyncWithPlainScalaTest extends FunSuite {
 
@@ -49,11 +50,11 @@ class AsyncWithPlainScalaTest extends FunSuite {
     assert(result.getMessage === "are you joking?")
   }
 
-  test("should call async func and wait for it to finish with await result, positive case") {
+  test("should call async func and wait for it to finish with await result, positive case, time out") {
     val result =
       Await.result(
         new SystemUnderTest().doAsyncOperationAndReturnValue("sunny day"),
-        Duration.Inf
+        50 milliseconds
       )
 
     result shouldBe "stuff"

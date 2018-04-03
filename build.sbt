@@ -4,8 +4,14 @@ lazy val root = project
     name := "async-scalatest-tutorial",
     version := "0.1",
     scalaVersion := "2.12.4",
-    libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-core" % "1.0.1",
-      "org.scalatest" %% "scalatest" % "3.0.4" % Test
-    )
+    libraryDependencies ++= {
+      val monix = "io.monix"
+      val monixV = "2.3.3"
+
+      Seq(
+        monix             %% "monix"                    % monixV,
+        monix             %% "monix-cats"               % monixV,
+        "org.scalatest" %% "scalatest" % "3.0.4" % Test
+      )
+    }
   )

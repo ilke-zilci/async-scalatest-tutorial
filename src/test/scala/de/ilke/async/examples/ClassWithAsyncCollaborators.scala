@@ -4,6 +4,7 @@ import cats.syntax.all._
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 import scala.language.higherKinds
+import monix.eval.Task
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -43,6 +44,14 @@ class ClassWithAsyncCollaborators extends FunSuite {
 
   trait FooRepository2[F[_]] {
     def getFoo: F[Foo]
+  }
+
+  class FutureFooRepository2 extends FooRepository2[Future] {
+    override def getFoo: Future[Foo] = ???
+  }
+
+  class TaskFooRepository2 extends FooRepository2[Task] {
+    override def getFoo: Task[Foo] = ???
   }
 
   trait BarRepository2[F[_]] {

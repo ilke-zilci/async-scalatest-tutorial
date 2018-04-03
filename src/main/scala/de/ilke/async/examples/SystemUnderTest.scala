@@ -33,7 +33,7 @@ class SystemUnderTest {
 
   def doAsyncOperationAndReturnValue(config: String): Future[String] = {
     Future {
-      Thread.sleep(10)
+      Thread.sleep(100)
       if (config == "rainy day") throw RainyDayException("are you joking?")
       "stuff"
     }
